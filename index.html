@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AeroNode - Intelligent Drone Delivery</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" style="color: white; transform: scale(1.2);">
+                        <!-- M Legs -->
+                        <polygon points="30,70 30,45 44,45 44,70" fill="currentColor"/>
+                        <polygon points="70,70 70,45 56,45 56,70" fill="currentColor"/>
+                        <polygon points="30,70 44,70 44,55" fill="currentColor"/>
+                        <polygon points="70,70 56,70 56,55" fill="currentColor"/>
+                        
+                        <!-- M Center V touching circle -->
+                        <polygon points="30,45 44,45 50,55" fill="currentColor"/>
+                        <polygon points="70,45 56,45 50,55" fill="currentColor"/>
+                        
+                        <!-- Center Circle -->
+                        <circle cx="50" cy="45" r="9" fill="none" stroke="currentColor" stroke-width="5"/>
+                        
+                        <!-- Horizontal Arms -->
+                        <line x1="18" y1="45" x2="30" y2="45" stroke="currentColor" stroke-width="4"/>
+                        <line x1="82" y1="45" x2="70" y2="45" stroke="currentColor" stroke-width="4"/>
+                        
+                        <!-- Angled Arms -->
+                        <line x1="30" y1="45" x2="22" y2="32" stroke="currentColor" stroke-width="4"/>
+                        <line x1="70" y1="45" x2="78" y2="32" stroke="currentColor" stroke-width="4"/>
+                        
+                        <!-- Rotors -->
+                        <ellipse cx="18" cy="42" rx="9" ry="3" fill="currentColor"/>
+                        <ellipse cx="82" cy="42" rx="9" ry="3" fill="currentColor"/>
+                        <ellipse cx="22" cy="29" rx="9" ry="3" fill="currentColor"/>
+                        <ellipse cx="78" cy="29" rx="9" ry="3" fill="currentColor"/>
+                    </svg>
+                </div>
+                <h2>AeroNode</h2>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-target="screen-creation">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    <span>Request Creation</span>
+                </a>
+                <a href="#" class="nav-item" data-target="screen-analytics">
+                    <i class="fa-solid fa-microchip"></i>
+                    <span>Analytics & Prediction</span>
+                </a>
+                <a href="#" class="nav-item" data-target="screen-decision">
+                    <i class="fa-solid fa-code-branch"></i>
+                    <span>Review & Decision</span>
+                </a>
+                <a href="#" class="nav-item" data-target="screen-dashboard">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Status Dashboard</span>
+                </a>
+            </nav>
+            
+            <div class="user-profile">
+                <img src="https://ui-avatars.com/api/?name=Operator+Admin&background=10b981&color=fff" alt="User Profile">
+                <div class="user-info">
+                    <p class="name">Operator Admin</p>
+                    <p class="role">Hub Coordinator</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Screen 1: Request Creation -->
+            <section id="screen-creation" class="screen-view active">
+                <header class="screen-header">
+                    <div>
+                        <h1>Create Delivery Request</h1>
+                        <p>Initialize a new multi-hop drone mission.</p>
+                    </div>
+                </header>
+                
+                <div class="content-grid">
+                    <div class="glass-card form-card">
+                        <h3>Mission Details</h3>
+                        <form id="creation-form">
+                            <div class="form-group">
+                                <label>Customer / Sender Name</label>
+                                <input type="text" placeholder="e.g. John Doe" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Pickup Location (Hub)</label>
+                                    <select required>
+                                        <option value="hub-a">Central Hub A</option>
+                                        <option value="hub-b">North Hub B</option>
+                                        <option value="hub-c">East Hub C</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Delivery Destination</label>
+                                    <input type="text" placeholder="Lat, Lng or Address" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Package Weight (kg)</label>
+                                    <input type="number" step="0.1" placeholder="Max 5kg" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Priority Level</label>
+                                    <select required>
+                                        <option value="standard">Standard</option>
+                                        <option value="high">High (Medical/Urgent)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fa-solid fa-paper-plane"></i> Submit Request
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="glass-card info-card">
+                        <h3>Recent Requests</h3>
+                        <ul class="request-list">
+                            <li>
+                                <div class="req-info">
+                                    <span class="req-id">REQ-8042</span>
+                                    <span class="req-dest">720 Smart City Blvd</span>
+                                </div>
+                                <span class="badge pending">Pending</span>
+                            </li>
+                            <li>
+                                <div class="req-info">
+                                    <span class="req-id">REQ-8041</span>
+                                    <span class="req-dest">Medical Center 2</span>
+                                </div>
+                                <span class="badge processing">Analyzing</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 2: Analytics Result Input -->
+            <section id="screen-analytics" class="screen-view">
+                <header class="screen-header">
+                    <div>
+                        <h1>Analytics & Prediction Engine</h1>
+                        <p>Analyze route distance and predict battery consumption for pending requests.</p>
+                    </div>
+                </header>
+                
+                <div class="content-grid two-col">
+                    <div class="glass-card">
+                        <h3>Run Prediction Model</h3>
+                        <form id="analytics-form">
+                            <div class="form-group">
+                                <label>Target Request (Sample Datasets)</label>
+                                <select required id="request-select">
+                                    <option value="REQ-8042">REQ-8042 (City Center - Standard Load, High Wind)</option>
+                                    <option value="REQ-8043">REQ-8043 (Suburbs - Heavy Load, Clear Weather)</option>
+                                    <option value="REQ-8044">REQ-8044 (Medical - Urgent, Rain Expected)</option>
+                                </select>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Wind Speed (m/s)</label>
+                                    <input type="number" step="0.1" value="4.2" id="wind-speed">
+                                </div>
+                                <div class="form-group">
+                                    <label>Payload (kg)</label>
+                                    <input type="number" step="0.1" value="2.5" id="payload-weight">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Temperature (°C)</label>
+                                    <input type="number" step="0.1" value="28" id="temperature">
+                                </div>
+                                <div class="form-group">
+                                    <label>Humidity (%)</label>
+                                    <input type="number" value="65" id="humidity">
+                                </div>
+                            </div>
+                            <button type="button" class="btn-secondary mt-2" id="btn-predict">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Execute Prediction
+                            </button>
+                        </form>
+                        
+                        <div class="prediction-results hidden" id="pred-result">
+                            <div class="result-box">
+                                <h4>Expected Battery Consumption</h4>
+                                <div class="big-value text-gradient">38%</div>
+                                <p>Safety Threshold: 15%</p>
+                            </div>
+                            <div class="result-box">
+                                <h4>Optimal Route</h4>
+                                <div class="route-hops">
+                                    Hub A <i class="fa-solid fa-arrow-right"></i> Hub C <i class="fa-solid fa-arrow-right"></i> Customer
+                                </div>
+                                <p>Total Distance: 14.2 km</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="glass-card visual-card" style="padding: 0; overflow: hidden; display: flex; flex-direction: column;">
+                        <h3 style="padding: 1.5rem 1.5rem 0.5rem 1.5rem; margin-bottom: 0;">Live Weather & Wind Map</h3>
+                        <div class="map-placeholder" style="flex: 1; border: none; border-radius: 0; background: transparent; padding: 1rem;">
+                            <img src="assets/weather_map.png" alt="Weather Map" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--panel-border);">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 3: Review and Decision -->
+            <section id="screen-decision" class="screen-view">
+                <header class="screen-header">
+                    <div>
+                        <h1>Review & Decision</h1>
+                        <p>Evaluate predicted models and allocate available drones.</p>
+                    </div>
+                </header>
+
+                <div class="content-grid">
+                    <div class="glass-card full-width">
+                        <div class="decision-header">
+                            <div>
+                                <h3>Mission: REQ-8042</h3>
+                                <p class="subtext">Requires 38% battery | Multi-hop: Hub A → C</p>
+                            </div>
+                            <div class="status-badge processing">Requires Assignment</div>
+                        </div>
+                        
+                        <h4 class="section-title mt-4">Available Drones at Hub A</h4>
+                        <div class="drone-grid">
+                            <!-- Drone 1 -->
+                            <div class="drone-card selected">
+                                <div class="drone-header">
+                                    <i class="fa-solid fa-plane-up"></i>
+                                    <span>DRN-Alpha-01</span>
+                                </div>
+                                <div class="drone-stats">
+                                    <div class="stat-line">
+                                        <span>Battery</span>
+                                        <span class="text-success">92%</span>
+                                    </div>
+                                    <div class="progress-bar"><div class="fill" style="width: 92%; background: #10b981;"></div></div>
+                                    <div class="stat-line mt-2">
+                                        <span>Health</span>
+                                        <span>Excellent</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Drone 2 -->
+                            <div class="drone-card">
+                                <div class="drone-header">
+                                    <i class="fa-solid fa-plane-up"></i>
+                                    <span>DRN-Beta-04</span>
+                                </div>
+                                <div class="drone-stats">
+                                    <div class="stat-line">
+                                        <span>Battery</span>
+                                        <span class="text-warning">45%</span>
+                                    </div>
+                                    <div class="progress-bar"><div class="fill" style="width: 45%; background: #f59e0b;"></div></div>
+                                    <div class="stat-line mt-2">
+                                        <span>Health</span>
+                                        <span>Good</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Drone 3 -->
+                            <div class="drone-card disabled">
+                                <div class="drone-header">
+                                    <i class="fa-solid fa-plane-up"></i>
+                                    <span>DRN-Gamma-12</span>
+                                </div>
+                                <div class="drone-stats">
+                                    <div class="stat-line">
+                                        <span>Battery</span>
+                                        <span class="text-danger">12% (Charging)</span>
+                                    </div>
+                                    <div class="progress-bar"><div class="fill" style="width: 12%; background: #ef4444;"></div></div>
+                                    <div class="stat-line mt-2">
+                                        <span>Health</span>
+                                        <span>Maintenance Req.</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="decision-actions mt-4">
+                            <button class="btn-danger"><i class="fa-solid fa-xmark"></i> Reject / Postpone</button>
+                            <button class="btn-primary" onclick="alert('Mission Approved! Drone Alpha-01 Dispatched.')"><i class="fa-solid fa-check-double"></i> Approve & Dispatch</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Screen 4: Status Dashboard -->
+            <section id="screen-dashboard" class="screen-view">
+                <header class="screen-header">
+                    <div>
+                        <h1>Live Operations Dashboard</h1>
+                        <p>Real-time fleet tracking and hub workload monitoring.</p>
+                    </div>
+                </header>
+
+                <div class="kpi-grid">
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fa-solid fa-plane-arrival"></i></div>
+                        <div class="kpi-details">
+                            <p>Active Flights</p>
+                            <h3>24</h3>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fa-solid fa-battery-three-quarters"></i></div>
+                        <div class="kpi-details">
+                            <p>Avg Fleet Battery</p>
+                            <h3>76%</h3>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon"><i class="fa-solid fa-building-circle-check"></i></div>
+                        <div class="kpi-details">
+                            <p>Hub Utilization</p>
+                            <h3>68%</h3>
+                        </div>
+                    </div>
+                    <div class="kpi-card">
+                        <div class="kpi-icon warning"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                        <div class="kpi-details">
+                            <p>Weather Alerts</p>
+                            <h3>1</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-grid dash-grid mt-4">
+                    <div class="glass-card">
+                        <h3>Fleet Energy Consumption</h3>
+                        <div class="chart-container">
+                            <canvas id="energyChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="glass-card">
+                        <h3>Active Missions</h3>
+                        <div class="mission-list">
+                            <div class="mission-item">
+                                <div class="m-header">
+                                    <span>DRN-Alpha-01</span>
+                                    <span class="m-status text-success">In Flight</span>
+                                </div>
+                                <div class="m-route">Hub A → Hub C</div>
+                                <div class="m-progress">
+                                    <div class="fill" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="mission-item">
+                                <div class="m-header">
+                                    <span>DRN-Zeta-08</span>
+                                    <span class="m-status text-warning">Returning</span>
+                                </div>
+                                <div class="m-route">Customer → Hub B</div>
+                                <div class="m-progress">
+                                    <div class="fill" style="width: 30%"></div>
+                                </div>
+                            </div>
+                            <div class="mission-item">
+                                <div class="m-header">
+                                    <span>DRN-Omega-02</span>
+                                    <span class="m-status text-success">Landing</span>
+                                </div>
+                                <div class="m-route">Hub C → Customer</div>
+                                <div class="m-progress">
+                                    <div class="fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
