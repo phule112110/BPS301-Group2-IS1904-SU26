@@ -1,0 +1,2626 @@
+6.1 Cover Page
+Item
+Description
+Course
+Business Process Management – BPS301
+Assignment
+Assignment 1
+Assignment Title
+Business Process Understanding and Real-life Business Problem
+Group Name
+Group 2
+DTA301/RBL Topic
+Intelligent Drone Delivery Management System with Battery Consumption Prediction and Resource-Aware Multi-hop Route Optimization
+Group Members
+StudentID
+FullName
+Title
+SE190621
+Bui Ho Ngoc Han
+Report & Presentation Lead
+SE193535
+Pham Tuyet Sang
+Model 
+SE192953
+Nguyen Huyen Trang
+Data Engineer
+SE190646
+Nguyen Thanh Tan
+Team Leader
+SE193315
+Luu Vi Khanh
+Data Analyst
+Lecturer
+Mr. Ngo Dang Ha An
+Submission Date
+21-June-2026
+6.2 Executive Summary
+This report focuses on an Intelligent Drone Delivery Management System with Battery Consumption Prediction and Resource-Aware Multi-hop Route Optimization. The selected topic 
+is related to drone-based last-mile delivery in smart logistics, where drones are used to transport packages from warehouses to customers through multiple intermediate hubs.
+The real-life business problem is that drone delivery operations are strongly limited by battery capacity, weather conditions, hub congestion, charging availability, and drone readiness. In the current process, delivery planning is often difficult because operators may not know exactly whether a drone has enough battery, which route is most efficient, or when a new delivery order can actually start.
+The main process analyzed is the drone delivery planning and execution process, including order creation, hub selection, route planning, drone assignment, battery estimation, delivery tracking, and performance monitoring. Key problems in the current process include inaccurate battery estimation, manual or static route planning, inefficient drone utilization, charging queue bottlenecks, and limited visibility for operators.
+The proposed improvement is to apply analytics and machine learning to predict battery consumption for each flight segment, optimize multi-hop routing, assign drones based on availability and battery status, and provide a dashboard for real-time monitoring. This improvement can help reduce delivery delays, improve drone utilization, lower energy consumption, and support better operational decision-making.
+6.3 Business Context
+The topic is set in the context of a smart logistics or e-commerce delivery organization that uses drones for last-mile delivery. Instead of relying only on traditional vehicles, the organization operates a drone delivery network consisting of warehouses, intermediate hubs, charging stations, drones, operators, technicians, and customers.
+The related business activity is the delivery order fulfillment process. When a customer places an order, the system needs to determine whether the delivery can be served, which hub should handle the order, which route should be used, which drone should be assigned for each flight segment, and when the customer can expect to receive the package.
+This topic is important in practice because drone delivery can reduce delivery time and improve service coverage, especially for short-distance and urgent deliveries. However, drone operations are more complex than normal delivery because each drone has limited battery life, payload capacity, flight range, and must be affected by weather conditions such as wind speed, wind direction, temperature, humidity, and rainfall.
+Data plays a central role in this context. The system uses drone data, battery data, hub status, charging queue data, delivery request data, weather data, and route data to support operational decisions. For example, battery consumption prediction can estimate how much energy a drone will use for each route segment, while hub data can show whether a hub has available drones or charging slots.
+The DTA301 analytics result is relevant because it supports the business process through prediction and optimization. Battery consumption prediction helps operators decide whether a drone can complete a flight safely. Multi-hop route optimization helps select the best route across hubs. Drone assignment analytics helps allocate available drones efficiently. As a result, analytics directly improves the delivery planning process, reduces operational risk, and supports faster and more reliable delivery service.
+6.4 Business Problem
+The current difficulty is that drone delivery planning depends on many changing factors, including battery level, payload weight, route distance, hub workload, charging queue, drone availability, and weather conditions. If these factors are not analyzed properly, the system may choose an inefficient route, assign an unsuitable drone, delay the delivery, or even create safety risks during flight.
+This problem affects multiple users, including operators, delivery managers, technicians, customers, and data analysts. Operators need reliable recommendations to plan deliveries. Technicians need to monitor drone battery and maintenance status. Customers need accurate estimated delivery time. Managers need to improve delivery success rate, cost efficiency, and resource utilization.
+If the problem is not solved, the organization may face delivery delays, higher energy consumption, low drone utilization, poor customer experience, increased operational cost, and higher safety risk. This is not only a technical or data problem because it directly affects the business process of receiving orders, planning delivery, assigning resources, monitoring execution, and informing customers.
+Prediction and optimization can support better decisions by estimating battery consumption, forecasting earliest start time, identifying route risks, and selecting the most suitable drone and hub. Therefore, analytics helps transform the process from manual or rule-based planning into a data-driven delivery management process.
+Problem Aspect
+Description
+Main problem 
+The organization needs to plan drone deliveries efficiently while considering battery limits, hub availability, charging queues, weather conditions, and drone assignment. 
+Affected users 
+Operators, delivery coordinators, hub managers, technicians, customers, data analysts, and system administrators. 
+Business impact 
+Delivery delays, higher operating cost, inefficient drone usage, inaccurate ETA, customer dissatisfaction, safety risk, and poor decision-making. 
+Data-related issue 
+Battery, weather, hub, drone, and order data may not be fully used for decision-making. Battery consumption may be estimated too simply based only on distance. 
+Process-related issue 
+Route planning and drone assignment can be manual, static, or not fully aware of real-time resources such as available drones, charging slots, queue length, and hub workload. 
+6.5 Stakeholder Analysis
+Stakeholder 
+Role in the Process 
+Main Needs 
+Main Concerns 
+Customer 
+Creates delivery orders, tracks delivery status, receives notifications, and confirms delivery. 
+Fast delivery, accurate ETA, safe package handling, clear order status. 
+Delivery delay, failed delivery, unclear tracking information, inaccurate estimated arrival time. 
+Operator / Delivery Coordinator 
+Manages orders, selects delivery plans, monitors drone missions, and responds to operational issues. 
+Recommended route, drone assignment plan, service availability result, real-time dashboard. 
+Wrong route selection, unavailable drones, hub congestion, weather disruption, manual decision overload. 
+Hub Manager 
+Monitors hub workload, drone availability, charging slots, landing capacity, and hub utilization. 
+Balanced workload, available drones, controlled charging queue, efficient hub operations. 
+Hub congestion, long charging queue, lack of available drones, low hub utilization. 
+Technician / Maintenance Staff 
+Monitors drone battery, charging status, technical health, and maintenance schedule. 
+Battery information, maintenance alerts, drone status history, charging station visibility. 
+Battery failure, unsafe flight, unexpected maintenance issue, lack of technical monitoring. 
+Data Analyst / ML Engineer 
+Builds and evaluates prediction and optimization models for battery consumption and route planning. 
+Clean data, flight logs, weather data, model evaluation metrics, explainable results. 
+Missing data, noisy data, inaccurate prediction, model not trusted by operators. 
+System Administrator 
+Manages users, roles, system configuration, database, deployment, and system reliability. 
+Secure access control, stable system, user management, reliable backend and dashboard. 
+System downtime, unauthorized access, data loss, integration failure, poor system scalability. 
+Safety Officer / Compliance Reviewer 
+Reviews safety rules, flight risk, emergency landing protocol, and 
+operational compliance. 
+Risk indicators, weather alerts, battery safety 
+threshold, emergency handling process. 
+Unsafe route, low remaining battery, bad weather, 
+regulatory or operational safety violation. 
+6.6 Current Process – AS-IS Process
+Quy 
+trình
+ 
+hiện
+ 
+tại
+ 
+mô
+ 
+tả
+ 
+cách
+ 
+thức
+ 
+vận
+ 
+hành
+ 
+mạng
+ 
+lưới
+ 
+giao
+ 
+hàng
+ 
+bằng
+ drone 
+đa
+ 
+chặng
+ (Multi-hop Relay Network) 
+khi
+ 
+chưa
+ 
+áp
+ 
+dụng
+ 
+mô
+ 
+hình
+ 
+máy
+ 
+học
+ 
+dự
+ 
+đoán
+ pin 
+thông
+ 
+minh
+ 
+và
+ 
+thuật
+ 
+toán
+ 
+tối
+ 
+ưu
+ 
+hóa
+ 
+tài
+ 
+nguyên
+ 
+đồng
+ 
+thời
+. 
+Kế
+ 
+hoạch
+ 
+định
+ 
+tuyến
+ 
+và
+ 
+phân
+ 
+công
+ drone 
+hiện
+ 
+tại
+ 
+mang
+ 
+tính
+ 
+tĩnh
+ (deterministic), 
+dựa
+ 
+trên
+ 
+các
+ 
+thuật
+ 
+toán
+ 
+truyền
+ 
+thống
+ (
+như
+ Dijkstra 
+hoặc
+ A* 
+cơ
+ 
+bản
+) 
+và
+ 
+ước
+ 
+lượng
+ 
+tiêu
+ hao 
+năng
+ 
+lượng
+ 
+đơn
+ 
+giản
+ 
+theo
+ 
+khoảng
+ 
+cách
+ 
+hình
+ 
+học
+.
+Process Trigger (
+Yếu
+ 
+tố
+ 
+kích
+ 
+hoạt
+):
+ 
+Khách
+ 
+hàng
+ 
+tạo
+ 
+đơn
+ 
+hàng
+ 
+trên
+ 
+hệ
+ 
+thống
+.
+Main Actors (
+Tác
+ 
+nhân
+ 
+chính
+):
+ Customer (
+Khách
+ 
+hàng
+), Operator (
+Nhân
+ 
+viên
+ 
+điều
+ 
+phối
+), Drone.
+Data Used (
+Dữ
+ 
+liệu
+ 
+sử
+ 
+dụng
+):
+ 
+Vị
+ 
+trí
+ 
+khách
+ 
+hàng
+, 
+khoảng
+ 
+cách
+ 
+giữa
+ 
+các
+ hub, 
+trạng
+ 
+thái
+ pin 
+hiện
+ 
+tại
+ (%), 
+danh
+ 
+sách
+ drone 
+đang
+ 
+rảnh
+ (AVAILABLE).
+Output of the Process:
+ 
+Đơn
+ 
+hàng
+ 
+được
+ 
+giao
+ 
+đến
+ 
+khách
+ 
+hàng
+ (
+hoặc
+ 
+bị
+ 
+hủy
+/
+trễ
+ 
+giữa
+ 
+chừng
+ do 
+sự
+ 
+cố
+ 
+phát
+ 
+sinh
+).
+Bảng
+ 
+mô
+ 
+tả
+ 
+quy
+ 
+trình
+ AS-IS: 
+Step
+Activity (
+Hoạt
+ 
+động
+)
+Responsible Role (Vai 
+trò
+)
+Input (
+Dữ
+ 
+liệu
+ 
+đầu
+ 
+vào
+)
+Output (
+Kết
+ 
+quả
+ 
+đầu
+ 
+ra
+)
+1
+Tạo
+ 
+đơn
+ 
+hàng
+ 
+và
+ 
+yêu
+ 
+cầu
+ 
+giao
+ 
+hàng
+.
+Customer
+Vị
+ 
+trí
+ 
+nhận
+/
+giao
+, 
+thông
+ tin 
+khối
+ 
+lượng
+ 
+hàng
+ 
+hóa
+.
+Đơn
+ 
+hàng
+ 
+được
+ 
+ghi
+ 
+nhận
+ ở 
+trạng
+ 
+thái
+ 
+chờ
+ 
+xử
+ 
+lý
+.
+2
+Lập
+ 
+kế
+ 
+hoạch
+ 
+tuyến
+ multi-hop 
+và
+ 
+kiểm
+ 
+tra
+ 
+tính
+ 
+khả
+ 
+thi
+ 
+về
+ pin 
+cho
+ 
+từng
+ 
+chặng
+ bay 
+khứ
+ 
+hồi
+.
+Operator
+Bản
+ 
+đồ
+ hub, 
+khoảng
+ 
+cách
+ 
+giữa
+ 
+các
+ hub, 
+vị
+ 
+trí
+ 
+khách
+ 
+hàng
+, 
+mức
+ pin 
+hiện
+ 
+tại
+ 
+của
+ 
+drone .
+Danh 
+sách
+ 
+các
+ 
+tuyến
+ 
+khả
+ 
+thi
+ 
+mà
+ drone 
+có
+ 
+thể
+ 
+hoàn
+ 
+thành
+ 
+cả
+ 
+hành
+ 
+trình
+ 
+đi
+ 
+và
+ quay 
+về
+ 
+với
+ 
+mức
+ pin 
+an
+ 
+toàn
+.
+3
+Chọn
+ 
+tuyến
+ 
+giao
+ 
+hàng
+ 
+tối
+ 
+ưu
+Operator
+Danh 
+sách
+ 
+tuyến
+ 
+khả
+ 
+thi
+, 
+khoảng
+ 
+cách
+, 
+số
+ hop.
+Tuyến 
+được
+ 
+chọn
+ 
+để
+ 
+thực
+ 
+hiện
+ 
+giao
+ 
+hàng
+.
+4
+Phân
+ 
+công
+ drone 
+tại
+ hub 
+xuất
+ 
+phát
+.
+Operator
+Tuyến 
+đã
+ 
+chọn
+, 
+danh
+ 
+sách
+ drone AVAILABLE.
+Drone 
+được
+ 
+gán
+ 
+cho
+ 
+chặng
+ 
+đầu
+ 
+tiên
+.
+5
+Thực
+ 
+hiện
+ 
+chặng
+ bay, 
+bàn
+ 
+giao
+ 
+hàng
+ 
+tại
+ hub 
+trung
+ 
+chuyển
+ 
+và
+ 
+điều
+ 
+khiển
+ drone quay 
+trở
+ 
+về
+ hub 
+xuất
+ 
+phát
+.
+Drone
+Hub 
+đích
+ 
+của
+ 
+chặng
+ bay.
+- 
+Hàng
+ 
+được
+ 
+bàn
+ 
+giao
+ 
+cho
+ hub 
+tiếp
+ 
+theo
+ .
+- Drone 
+chặng
+ 
+trước
+ 
+chuyển
+ sang 
+trạng
+ 
+thái
+ RETURNING, bay 
+về
+ 
+và
+ 
+hạ
+ 
+cánh
+ an 
+toàn
+ 
+tại
+ hub 
+xuất
+ 
+phát
+ 
+để
+ 
+sẵn
+ 
+sàng
+ 
+cho
+ 
+nhiệm
+ 
+vụ
+ 
+tiếp
+ 
+theo.
+6
+Phân
+ 
+công
+ drone 
+cho
+ 
+chặng
+ 
+tiếp
+ 
+theo.
+Operator
+Trạng
+ 
+thái
+ drone 
+và
+ hub 
+trung
+ 
+chuyển
+.
+Drone 
+mới
+ 
+được
+ 
+gán
+ 
+hoặc
+ 
+đơn
+ 
+hàng
+ 
+phải
+ 
+chờ
+.
+7
+Giao 
+hàng
+ 
+chặng
+ 
+cuối
+ 
+cho
+ 
+khách
+ 
+hàng
+ 
+và
+ 
+điều
+ 
+khiển
+ drone quay 
+trở
+ 
+về
+ hub 
+quản
+ 
+lý
+.
+Drone
+Vị
+ 
+trí
+ 
+khách
+ 
+hàng
+.
+- 
+Đơn
+ 
+hàng
+ 
+hoàn
+ 
+thành
+ (
+Khách
+ 
+hàng
+ 
+nhận
+ 
+hàng
+) .
+- Drone 
+chặng
+ 
+cuối
+ 
+chuyển
+ sang 
+trạng
+ 
+thái
+ RETURNING, bay quay 
+trở
+ 
+lại
+ hub 
+để
+ 
+sạc
+ 
+hoặc
+ 
+nhận
+ 
+đơn
+ 
+mới
+.
+6.7 Problems in the Current Process
+Dựa
+ 
+trên
+ 
+việc
+ 
+phân
+ 
+tích
+ chi 
+tiết
+ 
+quy
+ 
+trình
+ 
+vận
+ 
+hành
+ 
+tĩnh
+ (AS-IS) ở 
+mục
+ 6.6, 
+hệ
+ 
+thống
+ 
+bộc
+ 
+lộ
+ 
+những
+ 
+điểm
+ 
+nghẽn
+ 
+nghiêm
+ 
+trọng
+ 
+về
+ 
+mặt
+ 
+quy
+ 
+trình
+, 
+năng
+ 
+lượng
+ 
+và
+ 
+quản
+ 
+lý
+ 
+tài
+ 
+nguyên
+. 
+Việc
+ 
+đưa
+ 
+vào
+ 
+các
+ 
+giải
+ 
+pháp
+ 
+tính
+ 
+toán
+ 
+thông
+ 
+minh
+ 
+là
+ 
+bắt
+ 
+buộc
+ 
+để
+ 
+giải
+ 
+quyết
+ 
+triệt
+ 
+để
+ 
+các
+ 
+vấn
+ 
+đề
+ 
+sau
+:
+Problem ID
+Problem Description (
+Mô
+ 
+tả
+ 
+vấn
+ 
+đề
+)
+Cause (Nguyên 
+nhân
+ 
+gốc
+ 
+rễ
+)
+Impact (Hậu 
+quả
+/
+Tác
+ 
+động
+)
+Related Process Step
+P-01
+Sai 
+lệch
+ 
+lớn
+ 
+trong
+ 
+dự
+ 
+báo
+ 
+lượng
+ pin 
+tiêu
+ 
+thụ
+, 
+đặc
+ 
+biệt
+ 
+là
+ 
+không
+ 
+đảm
+ 
+bảo
+ 
+năng
+ 
+lượng
+ 
+cho
+ 
+chặng
+ bay 
+khứ
+ 
+hồi
+ (
+khi
+ drone quay 
+về
+ Hub).
+Mô
+ 
+hình
+ 
+hiện
+ 
+tại
+ 
+chỉ
+ 
+ước
+ 
+lượng
+ pin 
+thô
+ 
+sơ
+ 
+dựa
+ 
+trên
+ 
+khoảng
+ 
+cách
+ 
+hình
+ 
+học
+ 
+đơn
+ 
+thuần
+. Quy 
+trình
+ 
+hoàn
+ 
+toàn
+ 
+bỏ
+ qua 
+các
+ 
+yếu
+ 
+tố
+ phi 
+tuyến
+ 
+tính
+ 
+như
+ 
+trọng
+ 
+lượng
+ 
+tải
+ 
+trọng
+ (payload) 
+và
+ 
+góc
+ 
+gió
+ 
+tương
+ 
+đối
+ (Relative Wind Angle) 
+khi
+ drone quay 
+về
+.
+Drone 
+bị
+ 
+cạn
+ 
+kiệt
+ 
+năng
+ 
+lượng
+ 
+bất
+ 
+ngờ
+ 
+giữa
+ 
+đường
+ 
+khi
+ 
+đang
+ 
+thực
+ 
+hiện
+ 
+chặng
+ 
+giao
+ 
+hoặc
+ 
+chặng
+ bay 
+về
+, 
+buộc
+ 
+phải
+ 
+kích
+ 
+hoạt
+ 
+hạ
+ 
+cánh
+ 
+khẩn
+ 
+cấp
+ (Emergency Landing) 
+hoặc
+ 
+rơi
+ 
+tự
+ do, 
+gây
+ 
+hư
+ 
+hỏng
+ 
+thiết
+ 
+bị
+ 
+và
+ 
+mất
+ 
+mát
+ 
+hàng
+ 
+hóa
+.
+Step 2, Step 5, Step 7
+P-02
+Tắc
+ 
+nghẽn
+ 
+cục
+ 
+bộ
+ (Congestion) 
+tại
+ 
+hàng
+ 
+đợi
+ 
+sạc
+ 
+và
+ 
+bãi
+ 
+đáp
+ 
+của
+ 
+các
+ Hub 
+trung
+ 
+chuyển
+.
+Các 
+thuật
+ 
+toán
+ 
+truyền
+ 
+thống
+ (Dijkstra 
+hoặc
+ A* 
+cơ
+ 
+bản
+) 
+chỉ
+ 
+tìm
+ 
+tuyến
+ 
+đường
+ 
+ngắn
+ 
+nhất
+ 
+về
+ 
+mặt
+ 
+khoảng
+ 
+cách
+ 
+mà
+ 
+không
+ 
+kiểm
+ 
+tra
+ hay 
+đánh
+ 
+giá
+ dung 
+lượng
+ 
+cổng
+ 
+sạc
+ 
+khả
+ 
+dụng
+ (Available Charging Slots) 
+cũng
+ 
+như
+ 
+độ
+ 
+dài
+ 
+hàng
+ 
+đợi
+ 
+thực
+ 
+tế
+ 
+tại
+ 
+điểm
+ 
+đến
+.
+Nhiều
+ drone 
+cùng
+ 
+đổ
+ 
+về
+ 
+một
+ Hub 
+dẫn
+ 
+đến
+ 
+việc
+ drone 
+sau
+ 
+khi
+ 
+giao
+ 
+hàng
+ 
+hoặc
+ quay 
+về
+ 
+phải
+ 
+xếp
+ 
+hàng
+ 
+chờ
+ 
+đợi
+ 
+quá
+ 
+lâu
+, 
+làm
+ 
+kéo
+ 
+dài
+ 
+thời
+ 
+gian
+ 
+chờ
+ 
+sạc
+ 
+trung
+ 
+bình
+ 
+và
+ 
+giảm
+ 
+hiệu
+ 
+suất
+ 
+khai
+ 
+thác
+ 
+toàn
+ 
+mạng
+ 
+lưới
+.
+Step 2, Step 3, Step 6
+P-03
+Điều
+ 
+phối
+, 
+phân
+ 
+công
+ drone 
+và
+ 
+phân
+ 
+bổ
+ 
+tài
+ 
+nguyên
+ 
+bị
+ 
+rời
+ 
+rạc
+, 
+thiếu
+ 
+tính
+ 
+tối
+ 
+ưu
+ 
+tổng
+ 
+thể
+.
+Quy 
+trình
+ 
+xử
+ 
+lý
+ 
+ba
+ 
+bài
+ 
+toán
+ 
+cốt
+ 
+lõi
+: 
+Chọn
+ 
+lộ
+ 
+trình
+ (Route Selection), 
+Phân
+ 
+công
+ drone (Drone Assignment), 
+và
+ 
+Phân
+ 
+bổ
+ 
+tài
+ 
+nguyên
+ hub (Hub Resource Allocation) 
+đang
+ 
+bị
+ 
+tách
+ 
+biệt
+ 
+và
+ 
+xử
+ 
+lý
+ 
+tuần
+ 
+tự
+ 
+bởi
+ 
+nhân
+ 
+viên
+ 
+điều
+ 
+phối
+ (Operator).
+Không
+ 
+tối
+ 
+ưu
+ 
+được
+ 
+thời
+ 
+gian
+ 
+sẵn
+ 
+sàng
+ (Ready Time) 
+của
+ 
+đội
+ bay. 
+Tình
+ 
+trạng
+ 
+phân
+ 
+bổ
+ 
+không
+ 
+đều
+ 
+xảy
+ 
+ra
+ 
+liên
+ 
+tục
+ (Hub 
+thì
+ 
+quá
+ 
+tải
+ 
+hàng
+ 
+đợi
+, Hub 
+thì
+ drone 
+nhàn
+ 
+rỗi
+), 
+làm
+ 
+giảm
+ 
+sút
+ 
+sản
+ 
+lượng
+ 
+đơn
+ 
+hàng
+ 
+xử
+ 
+lý
+ 
+được
+ (Throughput).
+Step 3, Step 4, Step 6
+P-04
+Quy 
+trình
+ 
+hoàn
+ 
+toàn
+ 
+bị
+ 
+động
+, 
+không
+ 
+có
+ 
+khả
+ 
+năng
+ 
+tự
+ 
+ứng
+ 
+phó
+ 
+trước
+ 
+rủi
+ 
+ro
+ 
+thời
+ 
+gian
+ 
+thực
+.
+Kế
+ 
+hoạch
+ 
+tuyến
+ 
+đường
+ 
+mang
+ 
+tính
+ 
+tĩnh
+ (deterministic) 
+và
+ 
+cố
+ 
+định
+ 
+ngay
+ 
+từ
+ 
+đầu
+. 
+Hệ
+ 
+thống
+ 
+thiếu
+ 
+cơ
+ 
+chế
+ 
+tự
+ 
+động
+ 
+tái
+ 
+định
+ 
+tuyến
+ 
+động
+ (Dynamic Rerouting) 
+khi
+ 
+các
+ 
+chỉ
+ 
+số
+ 
+môi
+ 
+trường
+ 
+thay
+ 
+đổi
+ 
+đột
+ 
+ngột
+ 
+giữa
+ 
+chặng
+.
+Khi 
+gặp
+ 
+sự
+ 
+cố
+ 
+bất
+ 
+khả
+ 
+kháng
+ 
+như
+ 
+gió
+ 
+đổi
+ 
+hướng
+ 
+lớn
+ 
+hơn
+ 30 
+độ
+ 
+làm
+ hao pin 
+nhanh
+ 
+hoặc
+ 
+trạm
+ 
+đích
+ 
+hết
+ 
+chỗ
+ 
+đáp
+, 
+hệ
+ 
+thống
+ 
+không
+ 
+thể
+ 
+tự
+ 
+động
+ 
+xử
+ 
+lý
+, 
+dẫn
+ 
+đến
+ 
+trễ
+ 
+chuyến
+ 
+hàng
+ 
+loạt
+ 
+hoặc
+ 
+mất
+ an 
+toàn
+ bay.
+Step 5, Step 7
+P-05
+Không
+ 
+thể
+ 
+xác
+ 
+định
+ 
+chính
+ 
+xác
+ 
+tính
+ 
+khả
+ 
+dụng
+ 
+của
+ 
+mạng
+ 
+lưới
+ 
+để
+ cam 
+kết
+ 
+dịch
+ 
+vụ
+ 
+với
+ 
+khách
+ 
+hàng
+.
+Hệ
+ 
+thống
+ 
+thiếu
+ 
+một
+ 
+công
+ 
+cụ
+ 
+dự
+ 
+báo
+ 
+tích
+ 
+hợp
+ (Prediction Engine) 
+có
+ 
+khả
+ 
+năng
+ 
+phân
+ 
+tích
+ 
+đồng
+ 
+thời
+ 
+sự
+ 
+ảnh
+ 
+hưởng
+ 
+của
+ 
+thời
+ 
+tiết
+, 
+trạng
+ 
+thái
+ 
+đội
+ drone 
+và
+ 
+hàng
+ 
+đợi
+ 
+của
+ 
+các
+ hub 
+liên
+ 
+quan
+ 
+tại
+ 
+thời
+ 
+điểm
+ 
+đặt
+ 
+đơn
+.
+Nhân
+ 
+viên
+ 
+không
+ 
+thể
+ 
+trả
+ 
+lời
+ 
+được
+ 
+câu
+ 
+hỏi
+ "
+Hệ
+ 
+thống
+ 
+có
+ 
+đủ
+ 
+năng
+ 
+lực
+ 
+giao
+ 
+không
+?" 
+và
+ 
+không
+ 
+tính
+ 
+toán
+ 
+được
+ 
+Thời
+ 
+điểm
+ 
+sớm
+ 
+nhất
+ 
+có
+ 
+thể
+ 
+phục
+ 
+vụ
+ (Earliest Start Time), 
+dẫn
+ 
+đến
+ 
+việc
+ 
+cung
+ 
+cấp
+ 
+thời
+ 
+gian
+ 
+giao
+ 
+hàng
+ 
+dự
+ 
+kiến
+ (ETA) 
+sai
+ 
+lệch
+, 
+làm
+ 
+giảm
+ 
+trải
+ 
+nghiệm
+ 
+khách
+ 
+hàng
+.
+Step 1
+6.8 Proposed Process – TO-BE Process
+To address the limitations identified in the current process, the proposed TO-BE process integrates Machine Learning (ML) for battery consumption prediction, a Joint Optimization Engine for route and resource allocation, and a Dynamic Rerouting System for real-time decision making. Unlike the current deterministic approach, the new process utilizes real-time operational data and predictive analytics to improve delivery reliability, resource utilization, and operational efficiency.
+The major improvements include:
+Replacing distance-based battery estimation with an ML-based battery prediction model.
+Automatically evaluating network availability before accepting delivery requests.
+Simultaneously optimizing route selection, drone assignment, and hub resource allocation.
+Monitoring weather conditions, battery status, and hub congestion in real time.
+Automatically triggering dynamic rerouting when operational risks are detected.
+Transforming the role of operators from manual planners into system supervisors.
+These improvements enable the system to become more efficient, accurate, and controllable while reducing delivery delays and operational risks.
+TO-BE Process Description
+Step
+Proposed Activity
+Responsible Role
+Data/Tool Used
+Expected Output
+1
+Receive customer order and automatically evaluate delivery feasibility and estimated delivery time (ETA).
+Customer & Prediction Engine
+Customer location, weather data, fleet status, hub queue information
+Accepted order with reliable ETA
+2
+Predict battery consumption for all candidate routes using a Machine Learning model.
+Battery Prediction Engine
+Payload weight, flight distance, wind speed, wind direction, battery history
+Accurate battery consumption estimation
+3
+Simultaneously optimize route selection, drone assignment, and hub resource allocation.
+Joint Optimization Engine
+Battery prediction results, drone availability, charging slot availability, hub congestion data
+Optimal delivery plan generated
+4
+Automatically assign drones and reserve charging and landing resources at hubs.
+Resource Allocation Engine
+Drone status, charging slots, landing pad availability
+Resources allocated and reserved
+5
+Execute delivery mission while continuously 
+monitoring flight conditions.
+Drone & Monitoring System
+GPS data, battery level, weather 
+updates, telemetry data
+Safe mission execution
+6
+Dynamically reroute the mission if unexpected events occur such as weather changes or hub congestion.
+Dynamic Rerouting Engine
+Real-time environmental and operational data
+Alternative route generated automatically
+7
+Complete delivery and store operational data for performance analysis and model retraining.
+Drone & Analytics Platform
+Flight logs, battery consumption records, delivery performance metrics
+Successful delivery and updated analytics database
+Data Analytics Support
+Several key decisions are supported by data analytics in the proposed process:
+Battery consumption prediction using Machine Learning.
+ETA prediction based on network conditions and resource availability.
+Route optimization considering energy consumption and hub congestion.
+Drone assignment based on operational readiness.
+Dynamic rerouting based on real-time environmental changes.
+Resource allocation based on charging slot and landing pad availability.
+Changes in Roles
+In the current process, operators manually perform route planning, battery checking, and drone assignment. In the proposed process, these tasks are automated by intelligent systems. Operators mainly monitor system performance and intervene only in exceptional situations.
+Expected Benefits
+The proposed process is expected to provide several benefits:
+Improved battery prediction accuracy and reduced risk of energy depletion.
+Reduced congestion at hubs through optimized resource allocation.
+Faster route planning and drone assignment.
+More accurate delivery time estimation.
+Better utilization of drones, charging stations, and landing pads.
+Increased delivery throughput and operational reliability.
+Enhanced safety through real-time monitoring and dynamic rerouting.
+Requirement ID
+  Business Requirement
+Priority
+Related TO-BE Step
+BRQ-01
+The system shall automatically evaluate delivery feasibility and service availability before accepting a customer order.
+High
+Step 1
+BRQ-02
+The system shall provide a reliable Estimated Delivery Time (ETA) and Earliest Start Time for each delivery request.
+High
+Step 1
+BRQ-03
+The system shall predict battery consumption for each delivery segment using operational and environmental data.
+High
+Step 2
+BRQ-04
+The system shall estimate the remaining battery level after completing each delivery segment.
+High
+Step 2
+BRQ-05
+The system shall simultaneously optimize route selection, drone assignment, and hub resource allocation for delivery missions.
+High
+Step 3
+BRQ-06
+The system shall consider battery consumption, delivery time, drone availability, hub utilization, and operational risk when selecting delivery routes.
+High
+Step 3
+BRQ-07
+The system shall automatically assign available drones to delivery tasks based on operational readiness and mission requirements.
+High
+Step 4
+BRQ-08
+The system shall reserve charging slots and landing resources at hubs before mission execution.
+High
+Step 4
+BRQ-09
+The system shall continuously monitor drone status, battery level, location, and environmental conditions during delivery operations.
+High
+Step 5
+BRQ-10
+The system shall track the status of each delivery order from creation to completion.
+High
+Step 1 – Step 7
+BRQ-11
+The system shall automatically detect operational risks such as battery depletion, adverse weather conditions, and hub congestion.
+High
+Step 5
+BRQ-12
+The system shall automatically generate alternative routes when operational risks exceed predefined safety thresholds.
+High
+Step 6
+BRQ-13
+The system shall notify operators when critical events or delivery risks require human intervention.
+Medium
+Step 5, Step 6
+BRQ-14
+The system shall support emergency handling procedures, including mission hold, rerouting, and emergency landing recommendations.
+High
+Step 6
+BRQ-15
+The system shall store flight telemetry, battery consumption records, weather information, and delivery performance data for future analysis.
+High
+Step 7
+BRQ-16
+The system shall maintain historical operational data for machine learning model retraining and performance improvement.
+Medium
+Step 7
+BRQ-17
+The system shall provide explainable route recommendations and route selection justifications for operators.
+Medium
+Step 3
+BRQ-18
+The system shall provide explainable battery consumption insights, including the factors influencing battery usage predictions.
+Medium
+Step 2
+BRQ-19
+The system shall calculate and report hub utilization, charging queue length, and average waiting time.
+Medium
+Step 3, Step 7
+BRQ-20
+The system shall provide analytics dashboards for monitoring delivery performance, drone utilization, energy consumption, and service reliability.
+Medium
+Step 7
+6.10 Process Improvement Value
+The proposed TO-BE process improves the current drone delivery operation by transforming a static, manually controlled workflow into an intelligent and data-driven process. The improvement focuses on increasing energy efficiency, optimizing resource utilization, improving operational visibility, and reducing delivery risks through Machine Learning prediction, Joint Optimization, and Dynamic Rerouting mechanisms.
+Improvement Aspect
+AS-IS Situation
+TO-BE Improvement
+Expected Value
+Time
+Delivery planning and drone assignment are performed manually by operators after receiving customer requests. Route selection, drone allocation, and hub checking require multiple sequential decisions, causing delays in mission preparation.
+The system automatically evaluates delivery feasibility, predicts ETA, optimizes routes, and assigns drones based on current operational conditions.
+Reduce order processing time, shorten mission preparation time, and improve delivery speed. The system can provide faster and more reliable delivery scheduling.
+Accuracy
+Battery consumption is estimated mainly based on geometric distance without considering payload, wind conditions, and historical flight data. Route decisions may be energy-infeasible in real environments.
+Machine Learning models predict battery consumption using payload, distance, wind speed, wind direction, and historical telemetry data.
+Improve energy prediction accuracy, reduce incorrect route selection, and increase the probability of successful mission completion.
+Risk
+The process is reactive. The system cannot predict battery depletion, hub overload, or environmental changes before they affect the mission. Emergency handling depends on operator experience.
+The system continuously monitors battery status, weather conditions, and hub congestion. Dynamic Rerouting is triggered when risks exceed safety thresholds.
+Reduce emergency landing risk, prevent delivery failures, improve flight safety, and minimize operational losses.
+Monitoring
+Operators mainly monitor mission progress manually. There is limited real-time visibility of drone status, battery level, and network resource availability.
+A monitoring system collects real-time telemetry data, tracks drone status, detects abnormal conditions, and provides 
+operational dashboards.
+Improve operational transparency, enable faster responses, and support data-driven management decisions.
+Coordination
+Route selection, drone assignment, and hub resource allocation are handled separately. This creates unbalanced resource distribution, causing congestion at some hubs while others remain underutilized.
+Joint Optimization Engine integrates route planning, drone assignment, charging slot reservation, and hub resource allocation.
+Improve coordination among drones and hubs, reduce congestion, increase fleet utilization, and maximize delivery throughput.
+6.11 Conclusion
+This report analyzed the business process of an 
+Intelligent Drone Delivery Management System with Battery Consumption Prediction and Resource-Aware Multi-hop Route Optimization
+ in the context of smart logistics. The main business problem identified is that current drone delivery operations face difficulties in managing limited battery capacity, route planning, drone assignment, hub congestion, and real-time operational changes. These challenges directly affect delivery reliability, operational cost, resource utilization, and customer satisfaction.
+The analysis of the AS-IS process shows that the current drone delivery workflow relies heavily on static planning and manual decision-making. Operators are responsible for route selection, battery checking, drone assignment, and hub coordination based on limited operational information. The current process has several limitations, including inaccurate battery consumption estimation, inefficient resource allocation, lack of dynamic rerouting capability, poor visibility of real-time conditions, and difficulty in accurately predicting delivery feasibility and ETA.
+To overcome these limitations, the proposed TO-BE process introduces a data-driven workflow supported by Machine Learning prediction, Joint Optimization, and Dynamic Rerouting mechanisms. The improved process enables the system to automatically evaluate delivery 
+feasibility, predict battery consumption, optimize multi-hop routes, assign suitable drones, reserve hub resources, monitor missions in real time, and adapt to unexpected operational risks. This transformation changes the operator’s role from manual planner into system supervisor, improving decision quality and operational efficiency.
+The business requirements defined for Assignment 2 provide the foundation for designing the BPMN model and digital workflow prototype. These requirements focus on key capabilities such as battery prediction, ETA estimation, route and resource optimization, real-time monitoring, risk detection, dynamic rerouting, order tracking, and operational data collection. The proposed process helps create a safer, more efficient, and scalable drone delivery management system that can support future intelligent logistics operations.
+10.1 Cover Page
+Item
+Description
+Course
+Business Process Management – BPS301
+Assignment
+Assignment 2
+Assignment Title
+BPMN Modeling and Digital Workflow Prototype/Mockup
+Group Name
+Group 2
+DTA301/RBL Topic
+Intelligent Drone Delivery Management System with Battery Consumption Prediction and Resource-Aware Multi-hop Route Optimization
+Selected Process
+AI-Driven Drone Delivery Planning and Battery Consumption Prediction Process 
+Group Members
+Pham Tuyet Sang - SE193535 - Model 
+Nguyen Huyen Trang - SE192953 - Data Engineer 
+Bui Ho Ngoc Han - SE190621 - Report & Presentation Lead 
+Nguyen Thanh Tan - SE190646 - Team Leader 
+Luu Vi Khanh - SE193315 - Data Analyst
+Lecturer
+Ngo Dang Ha An
+Submission Date
+[Date]
+10.2 Selected Process Summary
+Selected Process Name
+AI-Driven Drone Delivery Planning and Battery Consumption Prediction Process
+Reason for Selection
+This process was selected because battery consumption is one of the most critical factors affecting drone delivery performance, operational safety, and mission success. In the current process, battery estimation is primarily based on flight distance, which often leads to inaccurate energy consumption calculations and inefficient resource allocation. The proposed process integrates Machine Learning-based battery prediction, route optimization, and dynamic rerouting to improve decision-making and operational efficiency. It also demonstrates how data analytics can be embedded into business processes to support intelligent automation and resource management.
+Main Input
+Customer order information
+Customer location
+Weather conditions
+Payload weight
+Drone availability status
+Battery history records
+Hub congestion information
+Charging slot availability
+Main Output
+Predicted battery consumption
+Optimized route plan
+Drone assignment decision
+Resource allocation plan
+Updated delivery status
+Delivery completion record
+Main Participants
+Customer
+Prediction Engine
+Battery Prediction Engine
+Joint Optimization Engine
+Resource Allocation Engine
+Drone Monitoring System
+Dynamic Rerouting Engine
+Analytics Platform
+Operations Supervisor
+DTA301 Result Used
+Battery Consumption Prediction generated by the Machine Learning model.
+Process Summary
+The proposed AI-driven drone delivery process enhances operational efficiency by integrating predictive analytics and intelligent decision support throughout the delivery lifecycle. The process begins when a customer submits a delivery request. The system automatically evaluates delivery feasibility and estimates the expected delivery time based on current network conditions, weather information, fleet availability, and hub congestion data.
+Next, a Machine Learning-based Battery Prediction Engine estimates battery consumption for all feasible delivery routes using factors such as payload weight, flight distance, wind speed, wind direction, and historical battery performance. These prediction results are then provided to a Joint Optimization Engine that simultaneously determines the optimal route, drone assignment, and hub resource allocation plan.
+After an optimal delivery plan is generated, drones and supporting resources such as charging slots and landing pads are automatically reserved. During mission execution, the system continuously monitors drone telemetry, battery levels, GPS information, and environmental 
+conditions. If operational risks such as adverse weather conditions or hub congestion are detected, the Dynamic Rerouting Engine automatically generates alternative routes to maintain service reliability and safety.
+Finally, upon successful delivery completion, operational data including flight logs, battery consumption records, and delivery performance metrics are stored in the analytics platform for future analysis and model retraining. By integrating Machine Learning predictions and intelligent optimization into operational workflows, the proposed process significantly improves battery prediction accuracy, resource utilization, delivery reliability, and overall system performance.
+10.3 Detailed BPMN Model
+Insert the BPMN diagram of the selected TO-BE process.
+Figure 1. BPMN Diagram of Order Assessment Process 
+Figure 2. BPMN Diagram of Route Planning Process
+ 
+Figure 3. BPMN Diagram of Delivery Execution Process 
+The BPMN diagram must include:
+BPMN Element
+Requirement
+Pool/Lane
+Required
+Start Event
+Required
+End Event
+Required
+Tasks
+Required
+Gateways
+Required
+Sequence Flow
+Required
+Data Object
+Recommended
+Message Flow
+Recommended
+Exception Flow
+Recommended
+Students may use:
+Draw.io / diagrams.net.
+Bizagi Modeler.
+Camunda Modeler.
+Lucidchart
+.
+Visio.
+PowerPoint.
+10.4. BPMN Flow Explanation
+Table 10.4 BPMN Flow Explanation 
+Step
+BPMN Activity
+Responsible Role
+Description
+1
+Submit Delivery Request
+Customer
+The customer submits a delivery request including destination, package weight, and delivery information.
+2
+Validate Request Information
+Order Management System
+The system validates the completeness and correctness of customer information. Invalid requests are rejected before further processing.
+3
+Identify Candidate Hubs
+Hub Selection Service
+Based on the customer's location, the system identifies available warehouses and intermediate hubs that are capable of serving the request.
+4
+Evaluate Hub Conditions
+Availability Assessment Service
+The system evaluates hub conditions including charging slot availability, landing pad capacity, drone availability, and queue length.
+5
+Predict Delivery Feasibility
+Prediction Engine
+The prediction engine determines whether the delivery can be accepted by considering weather conditions, fleet status, hub congestion, and estimated delivery time (ETA).
+6
+Generate Candidate Routes
+Route Planning Service
+Multiple feasible delivery routes are generated for further evaluation.
+7
+Predict Battery Consumption
+Battery Prediction Service
+A Machine Learning model predicts battery consumption for each candidate route using payload weight, flight distance, wind speed, wind direction, and historical battery data.
+8
+Evaluate Route Efficiency
+Route Planning Service
+Each candidate route is evaluated according to battery usage, travel distance, estimated delivery time, operational risk, and overall efficiency.
+9
+Check Return-to-Hub Feasibility
+Route Planning Service
+The system verifies whether the assigned drone can safely complete the delivery mission and return to a charging hub while maintaining the required safety battery reserve.
+10
+Evaluate Route Resources
+Resource Management Service
+The system checks drone availability together with charging slot and landing pad availability along the selected route.
+11
+Select Optimal Route
+Route Planning Service
+The route with the highest efficiency score that satisfies all operational constraints is selected.
+12
+Assign Drone(s)
+Resource Management Service
+Suitable drones are automatically assigned according to battery level, operational readiness, and mission requirements.
+13
+Generate Delivery Plan
+Route Planning Service
+The complete delivery plan, including assigned drones, selected route, and hub resources, is generated.
+14
+Dispatch Drone
+Drone Fleet Management System
+The drone mission begins according to the approved delivery plan.
+15
+Execute Delivery Mission
+Drone Fleet Management System
+Drones execute each delivery segment while continuously transmitting GPS, battery status, and telemetry information to the monitoring system.
+16
+Monitor Delivery and Detect Risks
+Drone Monitoring System
+The monitoring system continuously observes battery level, weather conditions, and hub status. Operational risks are automatically detected in real time.
+17
+Dynamic Rerouting (if required)
+Dynamic Rerouting Engine
+If battery depletion, severe weather, or hub congestion is detected, an alternative route is automatically generated and the delivery plan is updated.
+18
+Complete Delivery
+Drone Fleet Management System
+The package is successfully delivered to the customer, and delivery confirmation is recorded.
+19
+Return Drone to Hub
+Drone Fleet Management System
+The drone returns to the nearest suitable hub for charging or future assignments.
+20
+Store Operational Data
+Analytics Platform
+Flight logs, battery consumption, weather data, and delivery performance metrics are stored for reporting and future Machine Learning model retraining.
+Main Flow
+The business process starts when a customer submits a delivery request. After validating the request, the system evaluates hub availability and predicts whether the delivery is feasible. Candidate delivery routes are generated and evaluated using the Machine Learning Battery Prediction Engine. The route with the best efficiency score is selected, and available drones together with required hub resources are automatically assigned. The delivery mission is executed while operational conditions are continuously monitored. After successful delivery, the drone returns to the nearest hub, and operational data are stored for performance analysis and future model improvement.
+Alternative Flow
+If multiple feasible routes satisfy all operational constraints, the Joint Optimization Engine selects the route with the highest overall efficiency score by considering predicted battery consumption, delivery time, hub congestion, drone availability, and resource utilization. If several drones are available, the system automatically assigns the drone with the highest operational readiness and sufficient battery reserve.
+Exception Flow
+If the prediction engine determines that no feasible delivery plan exists because of insufficient battery capacity, unavailable drones, adverse weather conditions, or overloaded hubs, the 
+delivery request is temporarily rejected or postponed. During mission execution, if battery depletion, unexpected weather changes, or severe hub congestion are detected, the Dynamic Rerouting Engine automatically generates an alternative route. If no safe alternative route is available, the system triggers emergency handling procedures such as mission suspension, emergency landing, or operator intervention.
+End Conditions
+The process ends when one of the following conditions is reached:
+The delivery is successfully completed and confirmed by the customer.
+The drone safely returns to the designated charging hub.
+Operational data are stored in the analytics platform for reporting and Machine Learning model retraining.
+If delivery cannot be completed safely, the mission is terminated following emergency handling procedures and the final delivery status is recorded.
+10.5. 
+Rule ID
+Business Rule
+Related BPMN Task/Gateway
+R-01
+A delivery request shall be accepted only if customer information is complete and valid.
+Validate Request Information
+R-02
+Delivery feasibility shall be approved only when at least one candidate hub has available drones, charging slots, and landing capacity.
+Predict Delivery Feasibility
+R-03
+Battery consumption shall be predicted using the Machine Learning model before route selection.
+Predict Battery Consumption
+R-04
+A route shall be rejected if the predicted battery consumption exceeds the available battery after reserving the minimum safety threshold.
+Check Return-to-Hub Feasibility
+R-05
+The selected route shall maximize the overall route efficiency score while satisfying operational constraints.
+Select Optimal Route
+R-06
+Only drones with sufficient battery level, valid maintenance status, and AVAILABLE status may be assigned to delivery missions.
+Assign Drone(s)
+R-07
+Charging slots and landing pads must be successfully reserved before the delivery mission is dispatched.
+Generate Delivery Plan
+R-08
+During delivery execution, battery level, GPS location, weather conditions, and telemetry data shall be monitored continuously.
+Execute Delivery Mission
+R-09
+If battery depletion risk, severe weather, or hub congestion exceeds predefined safety thresholds, the Dynamic Rerouting Engine shall automatically generate an alternative route.
+Dynamic Rerouting Gateway
+R-10
+If no safe alternative route is available, the mission shall be suspended and escalated to the Operations Supervisor for manual decision-making.
+Dynamic Rerouting Gateway
+R-11
+A delivery shall be marked as completed only after successful package confirmation and mission completion.
+Complete Delivery
+R-12
+All flight logs, battery prediction results, telemetry records, weather information, and delivery performance metrics shall be stored after mission completion for future analytics and Machine Learning model retraining.
+Store Operational Data
+10.6 Process Data Design
+The intelligent drone delivery management system relies on multiple data objects throughout the business process. These data objects are created, updated, and exchanged among different services to support automated decision-making, route optimization, battery prediction, and delivery execution.
+Table 10.6.1 Process Data Design
+BPMN Task
+Input Data
+Output Data
+Data Owner
+Submit Delivery Request
+Customer ID, Delivery Address, Package Weight
+Delivery Request
+Customer
+Validate Request Information
+Delivery Request
+Validated Request
+Order Management System
+Identify Candidate Hubs
+Customer Location, Hub Database
+Candidate Hub List
+Hub Selection Service
+Evaluate Hub Conditions
+Candidate Hubs, Charging Slot Status, Landing Pad Status, Queue Length
+Hub Evaluation Result
+Hub Selection Service
+Select Optimal Hub
+Hub Evaluation Result
+Selected Hub
+Hub Selection Service
+Check Drone Availability
+Drone Fleet Status
+Available Drone List
+Availability Assessment Service
+Check Hub Resource Availability
+Charging Slots, Landing Pads
+Resource Availability Status
+Availability Assessment Service
+Predict Delivery Availability
+Available Drone List, Hub Resources, Weather Data
+Delivery Feasibility Result
+Prediction Engine
+Retrieve Delivery Information
+Approved Order
+Delivery Information
+Route Planning Service
+Generate Candidate Routes
+Hub Map, Delivery Information
+Candidate Routes
+Route Planning Service
+Predict Battery Consumption
+Candidate Routes, Payload Weight, Wind Speed, Wind Direction, Historical Battery Dataset
+Predicted Battery Consumption
+Battery Prediction Service
+Evaluate Route Efficiency
+Candidate Routes, Predicted Battery Consumption
+Route Efficiency Score
+Route Planning Service
+Check Return-to-Hub Feasibility
+Battery Prediction, Safety Threshold
+Return Feasibility Status
+Route Planning Service
+Evaluate Route Resources
+Route Information, Drone Availability, Hub Resources
+Feasible Route List
+Resource Management Service
+Select Optimal Route
+Route Efficiency Score, Feasible Route List
+Optimal Route
+Route Planning Service
+Assign Drone(s)
+Optimal Route, Available Drone List
+Drone Assignment
+Resource Management Service
+Generate Delivery Plan
+Optimal Route, Assigned Drone
+Delivery Plan
+Route Planning Service
+Dispatch Drone
+Delivery Plan
+Drone Mission
+Drone Fleet Management System
+Execute Delivery Hop
+Drone Mission, GPS Data
+Hop Delivery Status
+Drone Fleet Management System
+Transfer Package
+Package Information
+Package Transfer Confirmation
+Hub Management System
+Assign Next-Hop Drone
+Available Drone List
+Next-Hop Assignment
+Hub Management System
+Confirm Delivery Completion
+Delivery Confirmation
+Delivery Completed Status
+Order Management System
+Return Drone to Nearest Hub
+Current Drone Status
+Drone Returned Status
+Drone Fleet Management System
+Update Delivery Status
+Delivery Completion Information
+Updated Order Status
+Order Management System
+Table 10.6.2 Main Data Objects
+Data Object
+Description
+Used In
+Delivery Request
+Customer delivery request including destination and package information
+Submit Delivery Request, Validate Request
+Customer Information
+Customer identification and contact information
+Submit Delivery Request
+Package Information
+Package weight, dimensions, and delivery requirements
+Battery Prediction, Delivery Execution
+Hub Information
+Hub location, charging capacity, landing pad availability
+Hub Selection, Route Planning
+Drone Status
+Battery level, availability, current location
+Availability Assessment, Route Planning
+Weather Data
+Wind speed, wind direction, temperature
+Battery Prediction, Delivery Availability
+Battery Prediction Result
+Predicted battery consumption generated by the ML model
+Route Planning, Route Feasibility
+Route Efficiency Score
+Overall score evaluating delivery efficiency
+Route Selection
+Route Plan
+Candidate and optimal delivery routes
+Route Planning
+Delivery Plan
+Final approved delivery plan
+Delivery Execution
+Resource Availability
+Charging slots, landing pads, queue status
+Availability Assessment, Resource Management
+Drone Assignment
+Assigned drone for each delivery mission
+Route Planning, Delivery Execution
+Delivery Status
+Current delivery progress (Pending, In Progress, Completed)
+Delivery Execution
+GPS & Telemetry Data
+Real-time drone location, speed, battery, altitude
+Delivery Execution
+Flight Log
+Historical flight records used for monitoring and future analytics
+Delivery Completion
+10.7 Digital Workflow Design
+The digital workflow is designed to support the three BPMN processes using a combination of web-based forms (Google Forms/
+AppSheet
+) for data input, a Notion/Trello-style board for workflow state tracking, and an operations dashboard for real-time monitoring and decision support.
+10.7.1 User Roles
+Role
+Responsibility in Workflow
+Customer
+Submits delivery requests through the online request form; receives order status notifications and delivery confirmation.
+Order Management System
+Validates incoming requests, identifies candidate hubs, assesses delivery feasibility, approves or rejects orders, confirms delivery completion, and updates final delivery status.
+Hub Selection Service
+Evaluates hub conditions including congestion level and location; selects the optimal dispatch hub for each order.
+Availability Assessment Service
+Checks drone fleet availability and hub resource availability; runs delivery feasibility prediction to determine whether the order can proceed.
+Route Planning Service
+Retrieves delivery information, generates candidate multi-hop routes, evaluates route efficiency and return-to-hub feasibility, selects the optimal route, and generates the final delivery plan.
+Battery Prediction Service
+Executes the ML-based battery consumption prediction model for each candidate route using payload, distance, and weather inputs; provides prediction results to the Route Planning Service.
+Resource Management Service
+Evaluates resource availability across candidate routes; assigns drones and hub resources to the approved delivery plan.
+Drone Fleet System
+Receives the dispatched delivery plan; executes delivery hops; monitors hop-by-hop progress; returns drones to the nearest hub after delivery completion.
+Hub Management System
+Manages package transfers between hubs during multi-hop delivery; assigns next-hop drones when the final destination has not yet been reached.
+Operations Supervisor
+Reviews escalated cases where automated decisions cannot be made; approves or overrides system recommendations; monitors overall system performance via the operations dashboard.
+10.7.2 Workflow States
+State
+Description
+Responsible Role
+New
+A delivery request has been submitted by the customer and is waiting to be validated by the system.
+Order Management System
+Under Review
+The request is being actively processed: request validation, hub identification, drone availability check, hub resource check, and delivery feasibility prediction are being performed.
+Order Management System / Hub Selection Service / Availability Assessment Service
+Data Analysis Completed
+Battery consumption prediction and route efficiency evaluation have been completed by the Battery Prediction Service and Route Planning Service; results are ready for decision-making.
+Battery Prediction Service / Route Planning Service
+Approved
+The delivery plan has been generated, reviewed, and approved; drones and hub resources have been assigned; the plan is dispatched for execution.
+Order Management System / Resource Management Service
+Rejected / Postponed
+The request failed validation due to invalid input, or no feasible route or available resource 
+was found; the order is rejected or put on hold pending resource availability.
+Order Management System / Availability Assessment Service
+In Delivery
+The drone is actively executing delivery hops under the approved plan; the system monitors telemetry, battery levels, and hop progress in real time.
+Drone Fleet System / Hub Management System
+Completed
+The package has been successfully delivered to the final destination; delivery status has been updated; flight logs and battery records have been stored in the analytics platform.
+Order Management System / Drone Fleet System
+10.7.3 Notification and Escalation Rules
+Situation
+Notification / Escalation
+Delivery request fails validation (Request Valid? = No)
+Customer is automatically notified of rejection with the specific reason (e.g., invalid address, payload exceeds limit); Order Management System logs the rejected record.
+Delivery is not feasible (Delivery Feasible? = No)
+Customer is notified that the order cannot be fulfilled at this time; Operations Supervisor receives an alert to review resource constraints and determine if the order should be postponed.
+No feasible route found after evaluation (Feasible Route Available? = No)
+Route Planning Service triggers a re-evaluation with relaxed constraints; if no route is found after retry, Operations Supervisor is escalated to manually review or reschedule.
+Predicted battery consumption exceeds safe threshold for all candidate routes
+Battery Prediction Service flags all routes as unsafe; Route Planning Service is blocked from proceeding; Operations Supervisor is notified to assess drone fleet readiness or reschedule delivery.
+Final destination not yet reached during a delivery hop (Final Destination Reached? = No)
+Hub Management System automatically initiates package transfer and assigns the next-hop drone; no manual action is required under normal conditions.
+Drone telemetry anomaly or mid-flight battery drop detected during execution
+Drone Fleet System immediately escalates to Operations Supervisor; Dynamic Rerouting Engine is triggered to generate an alternative route; the customer is notified of a potential delay.
+Delivery successfully completed
+Customer automatically receives a delivery confirmation notification; Order Management System updates the status to Completed; the analytics platform stores all flight and battery records.
+ 
