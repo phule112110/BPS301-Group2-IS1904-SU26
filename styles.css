@@ -61,6 +61,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
+}
+
+.brand h2 {
+    font-size: 1.1rem;
+    line-height: 1.2;
+    word-break: break-word;
 }
 
 .nav-menu {
